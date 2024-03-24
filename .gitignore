@@ -13,6 +13,10 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+#Secrets
+appsettings.json
+appsettings.Development.json
+
 # Mono auto generated files
 mono_crash.*
 
@@ -35,6 +39,7 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+.cr
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 
