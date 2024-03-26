@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Catalog.Service.Entities;
 using Shop.Catalog.Service.Model;
 using System;
 using System.Collections.Generic;

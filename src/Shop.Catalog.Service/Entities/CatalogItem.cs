@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Numerics;
-using System.Text.Json.Serialization;
 
-namespace Shop.Catalog.Service.Model
+namespace Shop.Catalog.Service.Entities
 {
     public class CatalogItem
     {

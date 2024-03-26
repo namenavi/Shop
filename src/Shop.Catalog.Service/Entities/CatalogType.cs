@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shop.Catalog.Service.Model
+namespace Shop.Catalog.Service.Entities
 {
     public class CatalogType
     {
