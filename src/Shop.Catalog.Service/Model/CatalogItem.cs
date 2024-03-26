@@ -16,7 +16,7 @@ namespace Shop.Catalog.Service.Model
 
         public decimal Price { get; set; }
 
-        public int CatalogTypeId { get; set; }
+        public Guid CatalogTypeId { get; set; }
 
         public CatalogType CatalogType { get; set; }
 
