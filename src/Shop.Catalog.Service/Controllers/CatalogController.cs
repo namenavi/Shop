@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Catalog.Service.Entities;
 using Shop.Catalog.Service.Model;
+using Shop.Catalog.Service.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace Shop.Catalog.Service
@@ -12,52 +14,56 @@ namespace Shop.Catalog.Service
     [ApiController]
     public class CatalogController : ControllerBase
     {
-        private static readonly List<CatalogItem> items = new()
-        {
-            new CatalogItem() {
-                Id = Guid.NewGuid(),
-                Name="Велосипед Стелс",
-                Description="Очень быстрый",
-                Price= 22_000,
-                CatalogType = new CatalogType() {
-                    Id = Guid.NewGuid(),
-                    Type="Велосипеды"
-                }
-            },
-            new CatalogItem() {
-                Id = Guid.NewGuid(),
-                Name="Юбка крокс",
-                Description="Стильная",
-                Price= 2_500,
-                CatalogType = new CatalogType() {
-                    Id = Guid.NewGuid(),
-                    Type="Одежда"
-                }
-            },
-            new CatalogItem() {
-                Id = Guid.NewGuid(),
-                Name="Телефон Саммунг",
-                Description="Много памяти",
-                Price= 13_000,
-                CatalogType = new CatalogType() {
-                    Id = Guid.NewGuid(),
-                    Type="Телефоны"
-                }
-            }
-        };
+        //private static readonly List<CatalogItem> items = new()
+        //{
+        //    new CatalogItem() {
+        //        Id = Guid.NewGuid(),
+        //        Name="Велосипед Стелс",
+        //        Description="Очень быстрый",
+        //        Price= 22_000,
+        //        CatalogType = new CatalogType() {
+        //            Id = Guid.NewGuid(),
+        //            Type="Велосипеды"
+        //        }
+        //    },
+        //    new CatalogItem() {
+        //        Id = Guid.NewGuid(),
+        //        Name="Юбка крокс",
+        //        Description="Стильная",
+        //        Price= 2_500,
+        //        CatalogType = new CatalogType() {
+        //            Id = Guid.NewGuid(),
+        //            Type="Одежда"
+        //        }
+        //    },
+        //    new CatalogItem() {
+        //        Id = Guid.NewGuid(),
+        //        Name="Телефон Саммунг",
+        //        Description="Много памяти",
+        //        Price= 13_000,
+        //        CatalogType = new CatalogType() {
+        //            Id = Guid.NewGuid(),
+        //            Type="Телефоны"
+        //        }
+        //    }
+        //};
+
+        private readonly CatalogRepository _catalogRepository = new();
+
 
         // GET: /items/
         [HttpGet]
-        public IEnumerable<CatalogItem> Get()
+        public async Task<IEnumerable<CatalogItem>> GetAsync()
         {
+            var items = await _catalogRepository.GetItemsAsync();
             return items;
         }
 
         // GET /items/5546
         [HttpGet("{id}")]
-        public ActionResult<CatalogItem> GetById(Guid id)
+        public async Task<ActionResult<CatalogItem>> GetByIdAsync(Guid id)
         {
-            var item = items.Where(item => item.Id == id).SingleOrDefault();
+            var item = await _catalogRepository.GetItemAsync(id);
             if(item == null)
             {
                 return NotFound();
@@ -67,7 +73,7 @@ namespace Shop.Catalog.Service
 
         // POST /items/
         [HttpPost]
-        public ActionResult<CatalogItem> Post(CreateCatalogItemDTO createItemDTO)
+        public async Task<ActionResult<CatalogItem>> PostAsync(CreateCatalogItemDTO createItemDTO)
         {
             var item = new CatalogItem()
             {
@@ -78,16 +84,17 @@ namespace Shop.Catalog.Service
                 CatalogTypeId = createItemDTO.CatalogTypeId
             };
 
-            items.Add(item);
+            await _catalogRepository.CreateItemsAsync(item);
 
-            return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
         }
 
         // PUT /items/{id}
         [HttpPut("{id}")]
-        public IActionResult Put(Guid id, UpdateCatalogItemDTO updateItemDTO)
+        public async Task<IActionResult> PutAsync(Guid id, UpdateCatalogItemDTO updateItemDTO)
         {
-            var existingItem = items.Where(item => item.Id == id).SingleOrDefault();
+            var existingItem = await _catalogRepository.GetItemAsync(id);
+
             if(existingItem == null)
             {
                 var item = new CatalogItem
@@ -98,29 +105,32 @@ namespace Shop.Catalog.Service
                     Price = updateItemDTO.Price,
                     CatalogTypeId = updateItemDTO.CatalogTypeId
                 };
-                items.Add(item);
-                return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
+
+                await _catalogRepository.CreateItemsAsync(item);
+                return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
             }
 
             existingItem.Price = updateItemDTO.Price;
             existingItem.Name = updateItemDTO.Name;
             existingItem.Description = updateItemDTO.Description;
             existingItem.CatalogTypeId = updateItemDTO.CatalogTypeId;
+            await _catalogRepository.UpdateItemAsync(existingItem);
 
             return NoContent();
         }
 
         // DELETE /items/{id}
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var index = items.FindIndex(item => item.Id == id);
-            if(index == -1)
+            var existingItem = await _catalogRepository.GetItemAsync(id);
+
+            if(existingItem == null)
             {
                 return NotFound();
             }
 
-            items.RemoveAt(index);
+            await _catalogRepository.RemoveItemAsync(id);
 
             return NoContent();
         }
