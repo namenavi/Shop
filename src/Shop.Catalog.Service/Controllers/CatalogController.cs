@@ -48,8 +48,11 @@ namespace Shop.Catalog.Service
         //    }
         //};
 
-        private readonly CatalogRepository _catalogRepository = new();
-
+        private readonly ICatalogRepository _catalogRepository;
+        public CatalogController(ICatalogRepository catalogRepository)
+        {
+            this._catalogRepository = catalogRepository;
+        }
 
         // GET: /items/
         [HttpGet]

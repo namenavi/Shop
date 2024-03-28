@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Shop.Catalog.Service.Repositories
 {
-    public class CatalogRepository
+    public class CatalogRepository : ICatalogRepository
     {
         private const string collectionName = "items";
         private readonly IMongoCollection<CatalogItem> dbCollection;
         private readonly FilterDefinitionBuilder<CatalogItem> filterDefinitionBuilder = Builders<CatalogItem>.Filter;
 
-        public CatalogRepository()
+        public CatalogRepository(IMongoDatabase database)
         {
-            var mongoClient = new MongoClient("mongodb://localhost:27017");
-            var dataBase = mongoClient.GetDatabase("Catalog");
-            dbCollection = dataBase.GetCollection<CatalogItem>(collectionName);
+            //var mongoClient = new MongoClient("mongodb://localhost:27017");
+            //var dataBase = mongoClient.GetDatabase("Catalog");
+            dbCollection = database.GetCollection<CatalogItem>(collectionName);
         }
 
         public async Task<IReadOnlyCollection<CatalogItem>> GetItemsAsync()

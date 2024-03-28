@@ -1,7 +1,14 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
+using Shop.Catalog.Service.Repositories;
+using Shop.Catalog.Service.Settings;
 
 namespace Shop.Catalog.Service
 {
@@ -12,6 +19,19 @@ namespace Shop.Catalog.Service
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+            BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+
+            var serviceSetting = builder.Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
+
+            builder.Services.AddSingleton(serviceProvider =>
+            {
+                var mongoBdSettings = builder.Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+                var mongoClient = new MongoClient(mongoBdSettings!.ConnectionString);
+                return mongoClient.GetDatabase(serviceSetting!.ServiceName);
+            });
+
+            builder.Services.AddSingleton<ICatalogRepository, CatalogRepository>();
 
             builder.Services.AddControllers(options =>
             {
