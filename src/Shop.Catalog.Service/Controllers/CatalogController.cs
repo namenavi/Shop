@@ -14,42 +14,8 @@ namespace Shop.Catalog.Service
     [ApiController]
     public class CatalogController : ControllerBase
     {
-        //private static readonly List<CatalogItem> items = new()
-        //{
-        //    new CatalogItem() {
-        //        Id = Guid.NewGuid(),
-        //        Name="Велосипед Стелс",
-        //        Description="Очень быстрый",
-        //        Price= 22_000,
-        //        CatalogType = new CatalogType() {
-        //            Id = Guid.NewGuid(),
-        //            Type="Велосипеды"
-        //        }
-        //    },
-        //    new CatalogItem() {
-        //        Id = Guid.NewGuid(),
-        //        Name="Юбка крокс",
-        //        Description="Стильная",
-        //        Price= 2_500,
-        //        CatalogType = new CatalogType() {
-        //            Id = Guid.NewGuid(),
-        //            Type="Одежда"
-        //        }
-        //    },
-        //    new CatalogItem() {
-        //        Id = Guid.NewGuid(),
-        //        Name="Телефон Саммунг",
-        //        Description="Много памяти",
-        //        Price= 13_000,
-        //        CatalogType = new CatalogType() {
-        //            Id = Guid.NewGuid(),
-        //            Type="Телефоны"
-        //        }
-        //    }
-        //};
-
-        private readonly ICatalogRepository _catalogRepository;
-        public CatalogController(ICatalogRepository catalogRepository)
+        private readonly IRepository<CatalogItem> _catalogRepository;
+        public CatalogController(IRepository<CatalogItem> catalogRepository)
         {
             this._catalogRepository = catalogRepository;
         }

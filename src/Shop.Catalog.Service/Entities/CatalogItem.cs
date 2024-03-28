@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Catalog.Service.Entities
 {
-    public class CatalogItem
+    public class CatalogItem : IEntity
     {
         public Guid Id { get; set; }
 
