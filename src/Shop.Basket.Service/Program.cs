@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
+using Shop.Basket.Service.Repository;
+using Shop.Common.MongoDB;
+using System.Collections;
 
 namespace Shop.Basket.Service
 {
@@ -10,6 +14,13 @@ namespace Shop.Basket.Service
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddMongo();
+            builder.Services.AddSingleton<IBasketRepository>(serviceProvider =>
+            {
+                var database = serviceProvider.GetService<IMongoDatabase>();
+                return new BasketRepository(database!, "BasketItems");
+            });
 
             builder.Services.AddControllers();
 

@@ -13,17 +13,17 @@ namespace Shop.Catalog.Service
     [ApiController]
     public class CatalogController : ControllerBase
     {
-        private readonly IRepository<CatalogItem> _catalogRepository;
+        private readonly IRepository<CatalogItem> catalogRepository;
         public CatalogController(IRepository<CatalogItem> catalogRepository)
         {
-            this._catalogRepository = catalogRepository;
+            this.catalogRepository = catalogRepository;
         }
 
         // GET: /items/
         [HttpGet]
         public async Task<IEnumerable<CatalogItem>> GetAsync()
         {
-            var items = await _catalogRepository.GetItemsAsync();
+            var items = await catalogRepository.GetItemsAsync();
             return items;
         }
 
@@ -31,7 +31,7 @@ namespace Shop.Catalog.Service
         [HttpGet("{id}")]
         public async Task<ActionResult<CatalogItem>> GetByIdAsync(Guid id)
         {
-            var item = await _catalogRepository.GetItemAsync(id);
+            var item = await catalogRepository.GetItemAsync(id);
             if(item == null)
             {
                 return NotFound();
@@ -52,7 +52,7 @@ namespace Shop.Catalog.Service
                 CatalogTypeId = createItemDTO.CatalogTypeId
             };
 
-            await _catalogRepository.CreateItemsAsync(item);
+            await catalogRepository.CreateItemsAsync(item);
 
             return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
         }
@@ -61,7 +61,7 @@ namespace Shop.Catalog.Service
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(Guid id, UpdateCatalogItemDTO updateItemDTO)
         {
-            var existingItem = await _catalogRepository.GetItemAsync(id);
+            var existingItem = await catalogRepository.GetItemAsync(id);
 
             if(existingItem == null)
             {
@@ -74,7 +74,7 @@ namespace Shop.Catalog.Service
                     CatalogTypeId = updateItemDTO.CatalogTypeId
                 };
 
-                await _catalogRepository.CreateItemsAsync(item);
+                await catalogRepository.CreateItemsAsync(item);
                 return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
             }
 
@@ -82,7 +82,7 @@ namespace Shop.Catalog.Service
             existingItem.Name = updateItemDTO.Name;
             existingItem.Description = updateItemDTO.Description;
             existingItem.CatalogTypeId = updateItemDTO.CatalogTypeId;
-            await _catalogRepository.UpdateItemAsync(existingItem);
+            await catalogRepository.UpdateItemAsync(existingItem);
 
             return NoContent();
         }
@@ -91,14 +91,14 @@ namespace Shop.Catalog.Service
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var existingItem = await _catalogRepository.GetItemAsync(id);
+            var existingItem = await catalogRepository.GetItemAsync(id);
 
             if(existingItem == null)
             {
                 return NotFound();
             }
 
-            await _catalogRepository.RemoveItemAsync(id);
+            await catalogRepository.RemoveItemAsync(id);
 
             return NoContent();
         }

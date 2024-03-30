@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Shop.Common;
+using System;
+using System.Collections.Generic;
 
 namespace Shop.Basket.Service.Entities
 {
-    public class Basket
+    public class Basket : IEntity
     {
-        public string Id { get; init; }
-        public string UserId { get; init; }
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public List<BasketItem> Items { get; init; }
     }
 }
