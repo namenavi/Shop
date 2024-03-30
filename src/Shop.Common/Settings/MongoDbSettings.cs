@@ -1,4 +1,4 @@
-﻿namespace Shop.Catalog.Service.Settings
+﻿namespace Shop.Common.Settings
 {
     public class MongoDbSettings
     {

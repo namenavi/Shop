@@ -1,10 +1,10 @@
 ﻿using MongoDB.Driver;
-using Shop.Catalog.Service.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Shop.Catalog.Service.Repositories
+namespace Shop.Common.MongoDB
 {
     public class MongoRepository<T> : IRepository<T> where T : IEntity
     {
@@ -22,9 +22,19 @@ namespace Shop.Catalog.Service.Repositories
             return await dbCollection.Find(filterDefinitionBuilder.Empty).ToListAsync();
         }
 
+        public async Task<IReadOnlyCollection<T>> GetItemsAsync(Expression<Func<T, bool>> filter)
+        {
+            return await dbCollection.Find(filter).ToListAsync();
+        }
+
         public async Task<T> GetItemAsync(Guid id)
         {
             FilterDefinition<T> filter = filterDefinitionBuilder.Eq(entity => entity.Id, id);
+            return await dbCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<T> GetItemAsync(Expression<Func<T, bool>> filter)
+        {
             return await dbCollection.Find(filter).FirstOrDefaultAsync();
         }
 

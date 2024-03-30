@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Catalog.Service.Entities;
 using Shop.Catalog.Service.Model;
-using Shop.Catalog.Service.Repositories;
+using Shop.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 

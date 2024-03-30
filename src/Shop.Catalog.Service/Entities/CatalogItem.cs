@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Catalog.Service.Entities
@@ -16,10 +17,7 @@ namespace Shop.Catalog.Service.Entities
 
         public Guid CatalogTypeId { get; set; }
 
-        public CatalogType CatalogType { get; set; }
-
-        public CatalogItem() { }
-
-
+        //ToDo
+        //public CatalogType CatalogType { get; set; }
     }
 }

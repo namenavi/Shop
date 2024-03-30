@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shop.Catalog.Service.Entities
+namespace Shop.Common
 {
     public interface IEntity
     {

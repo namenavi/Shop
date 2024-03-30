@@ -4,10 +4,9 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using Shop.Catalog.Service.Entities;
-using Shop.Catalog.Service.Settings;
+using Shop.Common.Settings;
 
-namespace Shop.Catalog.Service.Repositories
+namespace Shop.Common.MongoDB
 {
     public static class Extensions
     {
@@ -19,7 +18,7 @@ namespace Shop.Catalog.Service.Repositories
             services.AddSingleton(serviceProvider =>
             {
                 var configuration = serviceProvider.GetService<IConfiguration>();
-                var serviceSetting = configuration!.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
+                var serviceSetting = configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
                 var mongoBdSettings = configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
                 var mongoClient = new MongoClient(mongoBdSettings!.ConnectionString);
                 return mongoClient.GetDatabase(serviceSetting!.ServiceName);
