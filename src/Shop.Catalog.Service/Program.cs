@@ -12,6 +12,7 @@ namespace Shop.Catalog.Service
 {
     public class Program
     {
+        private const string AllowedOriginSetting = "AllowedOrigin";
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +41,12 @@ namespace Shop.Catalog.Service
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseCors(build =>
+                {
+                    build.WithOrigins(builder.Configuration[AllowedOriginSetting])
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
             }
 
             app.UseHttpsRedirection();
