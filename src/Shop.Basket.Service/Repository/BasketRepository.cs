@@ -1,10 +1,9 @@
 ﻿using MongoDB.Driver;
 using Shop.Basket.Service.Entities;
-using Shop.Common;
+using Shop.Catalog.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Shop.Basket.Service.Repository
@@ -133,18 +132,18 @@ namespace Shop.Basket.Service.Repository
             }
         }
 
-        public async Task UpdateCatalogItem(Guid catalogItemId, string name, decimal price)
+        public async Task UpdateCatalogItem(CatalogItemsUpdated catalogItems)
         {
             // Update catalog item in baskets
-            var baskets = await GetBaskets(catalogItemId);
+            var baskets = await GetBaskets(catalogItems.ItemId);
             foreach(var basket in baskets)
             {
                 var basketItem = basket.Items.FirstOrDefault
-                               (i => i.CatalogItemId == catalogItemId);
+                               (i => i.CatalogItemId == catalogItems.ItemId);
                 if(basketItem != null)
                 {
-                    basketItem.Name = name;
-                    basketItem.Price = price;
+                    basketItem.Name = catalogItems.Name;
+                    basketItem.Price = catalogItems.Price;
                     var update = Builders<Entities.Basket>.Update
                         .Set(c => c.Items, basket.Items);
                     await dbCollection.UpdateOneAsync(c => c.Id == basket.Id, update);
@@ -152,13 +151,13 @@ namespace Shop.Basket.Service.Repository
             }
         }
 
-        public async Task DeleteCatalogItem(Guid catalogItemId)
+        public async Task DeleteCatalogItem(CatalogItemsDeleted catalogItems)
         {
             // Delete catalog item from baskets
-            var baskets = await GetBaskets(catalogItemId);
+            var baskets = await GetBaskets(catalogItems.ItemId);
             foreach(var basket in baskets)
             {
-                basket.Items.RemoveAll(i => i.CatalogItemId == catalogItemId);
+                basket.Items.RemoveAll(i => i.CatalogItemId == catalogItems.ItemId);
                 var update = Builders<Entities.Basket>.Update
                     .Set(c => c.Items, basket.Items);
                 await dbCollection.UpdateOneAsync(c => c.Id == basket.Id, update);

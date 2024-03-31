@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Shop.Common" Version="1.0.0" />
+
+    <PackageReference Include="Shop.Common" Version="1.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shop.Catalog.Contracts\Shop.Catalog.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

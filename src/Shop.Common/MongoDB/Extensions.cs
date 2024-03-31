@@ -18,10 +18,10 @@ namespace Shop.Common.MongoDB
             services.AddSingleton(serviceProvider =>
             {
                 var configuration = serviceProvider.GetService<IConfiguration>();
-                var serviceSetting = configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
+                var serviceSettings = configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
                 var mongoBdSettings = configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
                 var mongoClient = new MongoClient(mongoBdSettings!.ConnectionString);
-                return mongoClient.GetDatabase(serviceSetting!.ServiceName);
+                return mongoClient.GetDatabase(serviceSettings!.ServiceName);
             });
 
             return services;

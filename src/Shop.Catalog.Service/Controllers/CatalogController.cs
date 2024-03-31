@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Mvc;
+using Shop.Catalog.Contracts;
 using Shop.Catalog.Service.Entities;
 using Shop.Catalog.Service.Model;
 using Shop.Common;
@@ -14,9 +16,12 @@ namespace Shop.Catalog.Service
     public class CatalogController : ControllerBase
     {
         private readonly IRepository<CatalogItem> catalogRepository;
-        public CatalogController(IRepository<CatalogItem> catalogRepository)
+        private readonly IPublishEndpoint publishEndpoint;
+
+        public CatalogController(IRepository<CatalogItem> catalogRepository, IPublishEndpoint publishEndpoint)
         {
             this.catalogRepository = catalogRepository;
+            this.publishEndpoint = publishEndpoint;
         }
 
         // GET: /items/
@@ -49,10 +54,12 @@ namespace Shop.Catalog.Service
                 Name = createItemDTO.Name,
                 Description = createItemDTO.Description,
                 Price = createItemDTO.Price,
-                CatalogTypeId = createItemDTO.CatalogTypeId
+                //CatalogTypeId = createItemDTO.CatalogTypeId
             };
 
             await catalogRepository.CreateItemsAsync(item);
+
+            // await publishEndpoint.Publish(new CatalogItemsCreated(item.Id, item.Name, item.Price));
 
             return CreatedAtAction(nameof(GetByIdAsync), new { id = item.Id }, item);
         }
@@ -71,7 +78,7 @@ namespace Shop.Catalog.Service
                     Name = updateItemDTO.Name,
                     Description = updateItemDTO.Description,
                     Price = updateItemDTO.Price,
-                    CatalogTypeId = updateItemDTO.CatalogTypeId
+                    //CatalogTypeId = updateItemDTO.CatalogTypeId
                 };
 
                 await catalogRepository.CreateItemsAsync(item);
@@ -81,7 +88,10 @@ namespace Shop.Catalog.Service
             existingItem.Price = updateItemDTO.Price;
             existingItem.Name = updateItemDTO.Name;
             existingItem.Description = updateItemDTO.Description;
-            existingItem.CatalogTypeId = updateItemDTO.CatalogTypeId;
+            //existingItem.CatalogTypeId = updateItemDTO.CatalogTypeId;
+
+            await publishEndpoint.Publish(new CatalogItemsUpdated(existingItem.Id, existingItem.Name, existingItem.Price));
+
             await catalogRepository.UpdateItemAsync(existingItem);
 
             return NoContent();
@@ -99,6 +109,8 @@ namespace Shop.Catalog.Service
             }
 
             await catalogRepository.RemoveItemAsync(id);
+
+            await publishEndpoint.Publish(new CatalogItemsDeleted(existingItem.Id));
 
             return NoContent();
         }

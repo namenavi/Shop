@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Basket.Service.Entities;
 using Shop.Basket.Service.Repository;
-using Shop.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -22,6 +19,7 @@ namespace Shop.Basket.Service.Controllers
             this.itemsRepository = itemsRepository;
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<BasketItem>>> GetAsync(Guid userId)
         {
             if(userId == Guid.Empty)
@@ -33,6 +31,7 @@ namespace Shop.Basket.Service.Controllers
             return Ok(items);
         }
 
+        [HttpPost]
         public async Task<ActionResult> PostAsync(Guid userId, BasketItem basketItem)
         {
             await itemsRepository.InsertBasketItem(userId, basketItem);

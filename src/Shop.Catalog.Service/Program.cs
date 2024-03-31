@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Shop.Catalog.Service.Entities;
+using Shop.Common.MassTransit;
 using Shop.Common.MongoDB;
+using Shop.Common.Settings;
 
 namespace Shop.Catalog.Service
 {
@@ -13,8 +16,11 @@ namespace Shop.Catalog.Service
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var serviceSettings = builder.Configuration.GetSection(nameof(ServiceSettings)).Get<ServiceSettings>();
+
             builder.Services.AddMongo()
-                .AddMongoRepository<CatalogItem>("items");
+                .AddMongoRepository<CatalogItem>("items")
+                .AddMassTransitWithRabbitMq();
 
             builder.Services.AddControllers(options =>
             {
