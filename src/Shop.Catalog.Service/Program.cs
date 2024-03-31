@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,13 @@ namespace Shop.Catalog.Service
             builder.Services.AddMongo()
                 .AddMongoRepository<CatalogItem>("items")
                 .AddMassTransitWithRabbitMq();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://localhost:5003";
+                    options.Audience = serviceSettings.ServiceName;
+                });
 
             builder.Services.AddControllers(options =>
             {
@@ -51,6 +59,9 @@ namespace Shop.Catalog.Service
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Catalog.Contracts;
 using Shop.Catalog.Service.Entities;
@@ -13,6 +14,7 @@ namespace Shop.Catalog.Service
 {
     [Route("items")]
     [ApiController]
+    [Authorize]
     public class CatalogController : ControllerBase
     {
         private readonly IRepository<CatalogItem> catalogRepository;
