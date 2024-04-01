@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Basket.Service.Entities;
 using Shop.Basket.Service.Repository;
 using System;
@@ -10,6 +11,7 @@ namespace Shop.Basket.Service.Controllers
 {
     [Route("items")]
     [ApiController]
+    [Authorize]
     public class BasketController : Controller
     {
         private readonly IBasketRepository itemsRepository;

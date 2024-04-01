@@ -26,7 +26,7 @@ namespace Shop.Identity.Service
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
@@ -77,7 +77,7 @@ namespace Shop.Identity.Service
             //.AddMongoDbHealthCheck();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Этот метод вызывается средой выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if(env.IsDevelopment())

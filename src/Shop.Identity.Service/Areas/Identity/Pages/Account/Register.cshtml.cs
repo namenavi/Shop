@@ -97,7 +97,7 @@ namespace Shop.Identity.Service.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     //add the player role to the created user
-                    await _userManager.AddToRoleAsync(user, Roles.Roles.Player);
+                    await _userManager.AddToRoleAsync(user, Roles.Roles.Ñustomer);
                     //await publishEndpoint.Publish(new UserUpdated(user.Id, user.Email, user.Money));
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

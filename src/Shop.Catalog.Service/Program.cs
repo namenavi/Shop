@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Shop.Catalog.Service.Entities;
+using Shop.Common.Identity;
 using Shop.Common.MassTransit;
 using Shop.Common.MongoDB;
 using Shop.Common.Settings;
@@ -22,14 +22,8 @@ namespace Shop.Catalog.Service
 
             builder.Services.AddMongo()
                 .AddMongoRepository<CatalogItem>("items")
-                .AddMassTransitWithRabbitMq();
-
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = "https://localhost:5003";
-                    options.Audience = serviceSettings.ServiceName;
-                });
+                .AddMassTransitWithRabbitMq()
+                .AddJwtBearerAuthentication();
 
             builder.Services.AddControllers(options =>
             {

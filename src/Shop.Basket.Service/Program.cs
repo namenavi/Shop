@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Shop.Basket.Service.Repository;
+using Shop.Common.Identity;
 using Shop.Common.MassTransit;
 using Shop.Common.MongoDB;
 
@@ -21,7 +22,8 @@ namespace Shop.Basket.Service
             {
                 var database = serviceProvider.GetService<IMongoDatabase>();
                 return new BasketRepository(database!, "BasketItems");
-            }).AddMassTransitWithRabbitMq();
+            }).AddMassTransitWithRabbitMq()
+            .AddJwtBearerAuthentication();
 
             builder.Services.AddControllers();
 
@@ -46,7 +48,9 @@ namespace Shop.Basket.Service
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

@@ -23,10 +23,10 @@ namespace Shop.Identity.Service.Roles.HostedServices
         }
 
         /*
-            runs when the service starts
-            what we want to do here is to create the player role and the admin role
-            also, we want to create the admin user
-            with this, our service starts already with those two roles created and the admin user created
+           запускается при запуске службы
+            здесь мы хотим создать роль игрока и роль администратора.
+            также мы хотим создать пользователя-администратора
+            при этом наша служба уже запускается с этими двумя созданными ролями и созданным пользователем-администратором.
          */
         public async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -35,9 +35,9 @@ namespace Shop.Identity.Service.Roles.HostedServices
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            //here we are going to effectively create the two main roles
+            //здесь мы собираемся эффективно создать две основные роли
             await CreateRoleIfNotExistsAsync(Roles.Admin, roleManager);
-            await CreateRoleIfNotExistsAsync(Roles.Player, roleManager);
+            await CreateRoleIfNotExistsAsync(Roles.Сustomer, roleManager);
 
             var adminUser = await userManager.FindByEmailAsync(settings.AdminUserEmail);
 
@@ -49,15 +49,15 @@ namespace Shop.Identity.Service.Roles.HostedServices
                     Email = settings.AdminUserEmail
                 };
 
-                //here we are creating the admin users and also assigning the admin role to him
+                //здесь мы создаем пользователей-администраторов, а также назначаем ему роль администратора
                 await userManager.CreateAsync(adminUser, settings.AdminUserPassword);
                 await userManager.AddToRoleAsync(adminUser, Roles.Admin);
             }
         }
 
         /*
-            runs when the services ends
-            in our case, we don't need to do nothing when the service ends
+            запускается, когда службы заканчиваются
+            в нашем случае нам не нужно ничего делать, когда услуга закончится
          */
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 

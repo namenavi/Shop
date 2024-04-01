@@ -56,7 +56,7 @@ namespace Shop.Identity.Service.Controllers
                 return NotFound();
 
             user.Email = userDto.Email;
-            // the concention in ASP.NET Core Identity is that the username must be the same as the email
+            // соглашение в ASP.NET Core Identity заключается в том, что имя пользователя должно совпадать с адресом электронной почты.
             user.UserName = userDto.Email;
             user.Money = userDto.Money;
 
@@ -78,9 +78,9 @@ namespace Shop.Identity.Service.Controllers
             await userManager.DeleteAsync(user);
 
             /*
-                We could have two options here>
-                  (1) Create a delete user contract
-                  (2) Don't delete the user and make him have 0 gil, thus not being able to make any purchases in the platform
+                Здесь у нас может быть два варианта>
+                  (1) Создайте пользовательский контракт на удаление.
+                  (2) Не удаляйте пользователя и не давайте ему 0 гил, чтобы он не мог совершать покупки на платформе.
              */
             //await publishEndpoint.Publish(new UserUpdated(user.Id, user.Email, 0));
 

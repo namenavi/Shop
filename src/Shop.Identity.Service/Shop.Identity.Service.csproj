@@ -12,7 +12,7 @@
     <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
-    <PackageReference Include="Shop.Common" Version="1.0.2" />
+    <PackageReference Include="Shop.Common" Version="1.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
