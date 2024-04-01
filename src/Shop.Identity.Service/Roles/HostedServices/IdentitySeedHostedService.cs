@@ -24,7 +24,7 @@ namespace Shop.Identity.Service.Roles.HostedServices
 
         /*
            запускается при запуске службы
-            здесь мы хотим создать роль игрока и роль администратора.
+            здесь мы хотим создать роль покупателя и роль администратора.
             также мы хотим создать пользователя-администратора
             при этом наша служба уже запускается с этими двумя созданными ролями и созданным пользователем-администратором.
          */
@@ -37,7 +37,7 @@ namespace Shop.Identity.Service.Roles.HostedServices
 
             //здесь мы собираемся эффективно создать две основные роли
             await CreateRoleIfNotExistsAsync(Roles.Admin, roleManager);
-            await CreateRoleIfNotExistsAsync(Roles.Сustomer, roleManager);
+            await CreateRoleIfNotExistsAsync(Roles.Customer, roleManager);
 
             var adminUser = await userManager.FindByEmailAsync(settings.AdminUserEmail);
 
@@ -55,10 +55,6 @@ namespace Shop.Identity.Service.Roles.HostedServices
             }
         }
 
-        /*
-            запускается, когда службы заканчиваются
-            в нашем случае нам не нужно ничего делать, когда услуга закончится
-         */
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
         private static async Task CreateRoleIfNotExistsAsync(

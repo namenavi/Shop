@@ -10,6 +10,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using Shop.Common.Settings;
 using Shop.Identity.Service.Entities;
+using Shop.Identity.Service.Roles.HostedServices;
 using Shop.Identity.Service.Settings;
 using System;
 
@@ -63,10 +64,10 @@ namespace Shop.Identity.Service
                 .AddInMemoryIdentityResources(identityServerSettings.IdentityResources)
                 .AddDeveloperSigningCredential();
 
-            //services.AddLocalApiAuthentication();
+            services.AddLocalApiAuthentication();
 
             services.AddControllers();
-            //services.AddHostedService<IdentitySeedHostedService>();
+            services.AddHostedService<IdentitySeedHostedService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shop.Identity.Service", Version = "v1" });

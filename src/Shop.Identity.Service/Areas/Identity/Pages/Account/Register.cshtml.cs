@@ -89,15 +89,15 @@ namespace Shop.Identity.Service.Areas.Identity.Pages.Account
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
-                    Money = identitySettings.StartingGil
+                    Money = identitySettings.StartingMoney
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if(result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Пользователь создал новую учетную запись с паролем.");
 
-                    //add the player role to the created user
-                    await _userManager.AddToRoleAsync(user, Roles.Roles.Сustomer);
+                    //добавить роль покупателя к созданному пользователю
+                    await _userManager.AddToRoleAsync(user, Roles.Roles.Customer);
                     //await publishEndpoint.Publish(new UserUpdated(user.Id, user.Email, user.Money));
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

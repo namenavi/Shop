@@ -14,9 +14,10 @@ namespace Shop.Catalog.Service
 {
     [Route("items")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = AdminRole)]
     public class CatalogController : ControllerBase
     {
+        private const string AdminRole = "Admin";
         private readonly IRepository<CatalogItem> catalogRepository;
         private readonly IPublishEndpoint publishEndpoint;
 

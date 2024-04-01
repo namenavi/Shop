@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Identity.Contracts;
@@ -8,14 +9,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Duende.IdentityServer.IdentityServerConstants;
 //using static IdentityServer4.IdentityServerConstants;
 using static Shop.Identity.Service.Dtos.Dtos;
+using static Shop.Identity.Service.Roles.Roles;
 
 namespace Shop.Identity.Service.Controllers
 {
     [ApiController]
     [Route("Users")]
-    //[Authorize(Policy = LocalApi.PolicyName, Roles = Roles.Roles.Admin)]
+    [Authorize(Policy = LocalApi.PolicyName, Roles = Admin)]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
