@@ -39,7 +39,7 @@ export class AuthorizeService {
     // 2) We try to authenticate the user using a PopUp Window. This might fail if there is a
     //    Pop-Up blocker or the user has disabled PopUps.
     // 3) If the two methods above fail, we redirect the browser to the IdP to perform a traditional
-    //    redirect flow.
+    //    redirect flow. trading.fullaccess
     async signIn(state) {
         await this.ensureUserManagerInitialized();
         try {
@@ -186,7 +186,7 @@ export class AuthorizeService {
             client_id: "frontend",
             redirect_uri: `${hostAndPort}${AuthorizationPaths.LoginCallback}`,
             response_type: "code",
-            scope:"openid profile catalog.fullaccess inventory.fullaccess trading.fullaccess IdentityServerApi roles",
+            scope:"openid profile catalog.fullaccess basket.fullaccess IdentityServerApi roles",
             post_logout_redirect_uri : `${hostAndPort}${AuthorizationPaths.LogOutCallback}`
         };
 

@@ -1,13 +1,11 @@
 //using IdentityServer4.Services;
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Shop.Identity.Service.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shop.Identity.Service.Areas.Identity.Pages.Account
@@ -17,25 +15,25 @@ namespace Shop.Identity.Service.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
-        //private readonly IIdentityServerInteractionService interaction;
+        private readonly IIdentityServerInteractionService interaction;
 
         public LogoutModel(
             SignInManager<ApplicationUser> signInManager,
-            ILogger<LogoutModel> logger
-            /*IIdentityServerInteractionService interaction*/)
+            ILogger<LogoutModel> logger,
+            IIdentityServerInteractionService interaction)
         {
             _signInManager = signInManager;
             _logger = logger;
-            //this.interaction = interaction;
+            this.interaction = interaction;
         }
 
         public async Task<IActionResult> OnGet(string logoutId)
         {
-            //var context = await interaction.GetLogoutContextAsync(logoutId);
-            //if(context?.ShowSignoutPrompt == false)
-            //{
-            //    return await this.OnPost(context.PostLogoutRedirectUri);
-            //}
+            var context = await interaction.GetLogoutContextAsync(logoutId);
+            if(context?.ShowSignoutPrompt == false)
+            {
+                return await this.OnPost(context.PostLogoutRedirectUri);
+            }
 
             return Page();
         }

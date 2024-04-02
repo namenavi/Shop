@@ -27,7 +27,6 @@ namespace Shop.Identity.Service
 
         public IConfiguration Configuration { get; }
 
-        // Этот метод вызывается средой выполнения. Используйте этот метод для добавления служб в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));

@@ -1,5 +1,5 @@
-# Play.Frontend
-React based frontend for the Play Economy system. 
+# Shop.Frontend
+React based frontend for the Shop system. 
 
 ## Prerequisites
 * [Latest Node.JS LTS version (64 bit)](https://nodejs.org/en/download)

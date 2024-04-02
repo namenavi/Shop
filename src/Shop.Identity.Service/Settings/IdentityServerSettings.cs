@@ -15,8 +15,8 @@ namespace Shop.Identity.Service.Settings
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                ////this means that whenever a user requests an identity token, we are saying that it should also return the roles claim
-                //new IdentityResource("roles", new[] {"role"})
+                ////это означает, что всякий раз, когда пользователь запрашивает идентификационный токен, мы говорим, что он также должен вернуть утверждение ролей.
+                new IdentityResource("roles", new[] {"role"})
             };
     }
 }
