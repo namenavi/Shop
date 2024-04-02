@@ -43,12 +43,12 @@ export class Home extends Component
   {
     return (
       <div>
-            <h1>Shop</h1>
-        <p>Welcome to the Shop website, a cloud native virtual shop system.</p>
+        <h1>Play Economy</h1>
+        <p>Welcome to the Play Economy website, a cloud native virtual economy system.</p>
         <p>To get started, yout can:</p>
         <ul>
           <li>Visit the <Link to={ApplicationPaths.StorePath}>Store</Link></li>
-                <li>Check your <Link to={ApplicationPaths.InventoryPath}>Basket</Link></li>
+          <li>Check your <Link to={ApplicationPaths.InventoryPath}>Inventory</Link></li>
           {this.adminView()}
         </ul>
         <p>You can also</p>
@@ -57,7 +57,7 @@ export class Home extends Component
           <li>Explore the Open API documentation:
             <ul>
               <li><a href={`${window.CATALOG_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Catalog service</a></li>
-              <li><a href={`${window.INVENTORY_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Basket service</a></li>
+              <li><a href={`${window.INVENTORY_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Inventory service</a></li>
               <li><a href={`${window.IDENTITY_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Identity service</a></li>
               <li><a href={`${window.TRADING_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Trading service</a></li>
             </ul>
