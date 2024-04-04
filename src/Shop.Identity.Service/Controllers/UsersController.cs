@@ -9,7 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Duende.IdentityServer.IdentityServerConstants;
+using static IdentityServer4.IdentityServerConstants;
+
 //using static IdentityServer4.IdentityServerConstants;
 using static Shop.Identity.Service.Dtos.Dtos;
 using static Shop.Identity.Service.Roles.Roles;

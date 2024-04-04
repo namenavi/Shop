@@ -1,5 +1,4 @@
-﻿//using IdentityServer4.Models;
-using Duende.IdentityServer.Models;
+﻿using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
 
