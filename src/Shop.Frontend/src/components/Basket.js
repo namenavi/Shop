@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Col, Container, Row, Table, Button } from 'react-bootstrap';
 import authService from './api-authorization/AuthorizeService'
 
-export class Inventory extends Component {
-  static displayName = Inventory.name;
+export class Basket extends Component {
+    static displayName = Basket.name;
 
   constructor(props) {
     super(props);
@@ -27,7 +27,7 @@ export class Inventory extends Component {
     }
 
     const token = await authService.getAccessToken();
-    fetch(`${window.INVENTORY_ITEMS_API_URL}?userId=${userId}`, {
+    fetch(`${window.BASKET_ITEMS_API_URL}?userId=${userId}`, {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     })
       .then(response => response.json())
@@ -89,7 +89,7 @@ export class Inventory extends Component {
 
     return (
       <div>
-        <h1 id="tabelLabel" >{this.cameFromUsersPage() ? this.props.location.user.username : 'My'} Inventory</h1>
+        <h1 id="tabelLabel" >{this.cameFromUsersPage() ? this.props.location.user.username : 'My'} Basket</h1>
         {contents}
       </div>
     );

@@ -14,7 +14,7 @@ namespace Shop.Catalog.Service
 {
     [Route("items")]
     [ApiController]
-    [Authorize(Roles = AdminRole)]
+
     public class CatalogController : ControllerBase
     {
         private const string AdminRole = "Admin";
@@ -49,6 +49,7 @@ namespace Shop.Catalog.Service
 
         // POST /items/
         [HttpPost]
+        [Authorize(Roles = AdminRole)]
         public async Task<ActionResult<CatalogItem>> PostAsync(CreateCatalogItemDTO createItemDTO)
         {
             var item = new CatalogItem()
@@ -69,6 +70,7 @@ namespace Shop.Catalog.Service
 
         // PUT /items/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = AdminRole)]
         public async Task<IActionResult> PutAsync(Guid id, UpdateCatalogItemDTO updateItemDTO)
         {
             var existingItem = await catalogRepository.GetItemAsync(id);
@@ -102,6 +104,7 @@ namespace Shop.Catalog.Service
 
         // DELETE /items/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = AdminRole)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var existingItem = await catalogRepository.GetItemAsync(id);

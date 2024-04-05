@@ -78,8 +78,8 @@ export class Users extends Component
               <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Gil</th>
-                <th>Inventory</th>
+                <th>Money</th>
+                            <th>Basket</th>
                 <th style={{ textAlign: "center" }}>Actions</th>
               </tr>
             </thead>
@@ -101,7 +101,7 @@ export class Users extends Component
                     </td>
                     <td>
                       <Link to={{
-                        pathname: '/inventory',
+                                pathname: '/Basket',
                         user: user
                       }} >
                         <Image src={inventoryLogo} height={35} />

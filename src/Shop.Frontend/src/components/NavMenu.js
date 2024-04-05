@@ -89,7 +89,7 @@ export class NavMenu extends Component
       return (<Fragment>
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          {this.storeAndInventoryItems()}
+              {this.storeAndBasketItems()}
           <Nav.Link as={Link} to={ApplicationPaths.CatalogPath}>Catalog</Nav.Link>
           <Nav.Link as={Link} to={ApplicationPaths.UsersPath}>Users</Nav.Link>
         </Nav>
@@ -103,7 +103,7 @@ export class NavMenu extends Component
       return (<Fragment>
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/">Home</Nav.Link>
-          {this.storeAndInventoryItems()}
+              {this.storeAndBasketItems()}
         </Nav>
         <Nav>
           {this.profileAndLogoutItems()}
@@ -118,11 +118,11 @@ export class NavMenu extends Component
     }
   }
 
-  storeAndInventoryItems()
+  storeAndBasketItems()
   {
     return (<Fragment>
       <Nav.Link as={Link} to={ApplicationPaths.StorePath}>Store</Nav.Link>
-      <Nav.Link as={Link} to={ApplicationPaths.InventoryPath}>My Inventory</Nav.Link>
+        <Nav.Link as={Link} to={ApplicationPaths.BasketPath}>My Basket</Nav.Link>
     </Fragment>);
   }
 

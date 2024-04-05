@@ -45,7 +45,7 @@ export default class GrantItemForm extends React.Component
     async grantItem()
     {
         const token = await authService.getAccessToken();
-        fetch(`${window.INVENTORY_ITEMS_API_URL}`, {
+        fetch(`${window.BASKET_ITEMS_API_URL}`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',

@@ -48,7 +48,7 @@ export class Home extends Component
         <p>To get started, yout can:</p>
         <ul>
           <li>Visit the <Link to={ApplicationPaths.StorePath}>Store</Link></li>
-          <li>Check your <Link to={ApplicationPaths.InventoryPath}>Inventory</Link></li>
+          <li>Check your <Link to={ApplicationPaths.BasketPath}>Basket</Link></li>
           {this.adminView()}
         </ul>
         <p>You can also</p>
@@ -57,9 +57,9 @@ export class Home extends Component
           <li>Explore the Open API documentation:
             <ul>
               <li><a href={`${window.CATALOG_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Catalog service</a></li>
-              <li><a href={`${window.INVENTORY_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Inventory service</a></li>
+              <li><a href={`${window.BASKET_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Basket service</a></li>
               <li><a href={`${window.IDENTITY_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Identity service</a></li>
-              <li><a href={`${window.TRADING_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Trading service</a></li>
+              {/*<li><a href={`${window.TRADING_SERVICE_URL}/swagger`} target="_blank" rel="noreferrer">Trading service</a></li>*/}
             </ul>
           </li>
         </ul>

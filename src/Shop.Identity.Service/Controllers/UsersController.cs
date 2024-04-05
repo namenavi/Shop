@@ -25,10 +25,9 @@ namespace Shop.Identity.Service.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IPublishEndpoint publishEndpoint;
 
-        public UsersController(UserManager<ApplicationUser> userManager/*, IPublishEndpoint publishEndpoint*/)
+        public UsersController(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
-            //this.publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
@@ -66,7 +65,6 @@ namespace Shop.Identity.Service.Controllers
 
             await userManager.UpdateAsync(user);
 
-            //await publishEndpoint.Publish(new UserUpdated(user.Id, user.Email, user.Money));
 
             return NoContent();
         }
@@ -84,9 +82,8 @@ namespace Shop.Identity.Service.Controllers
             /*
                 Здесь у нас может быть два варианта>
                   (1) Создайте пользовательский контракт на удаление.
-                  (2) Не удаляйте пользователя и не давайте ему 0 гил, чтобы он не мог совершать покупки на платформе.
+                  (2) Не удаляйте пользователя и не давайте ему 0 денег, чтобы он не мог совершать покупки на платформе.
              */
-            //await publishEndpoint.Publish(new UserUpdated(user.Id, user.Email, 0));
 
             return NoContent();
         }
